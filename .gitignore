@@ -1,0 +1,12 @@
+# Sanal ortam
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Ortam değişkenleri / gizli dosyalar
+.env
+
+# MacOS sistem dosyaları
+.DS_Store
