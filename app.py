@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify
 import openai
 import os
-
+import os
+print("------ DEBUG BAŞLADI ------")
+print("API KEY:", os.getenv("OPENAI_API_KEY"))
+print("------ DEBUG BİTTİ ------")
 app = Flask(__name__)
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
@@ -29,7 +32,3 @@ def webhook():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-print("API KEY:", os.getenv("OPENAI_API_KEY"))
-print("------ DEBUG BAŞLADI ------")
-print("API KEY:", os.getenv("OPENAI_API_KEY"))
-print("------ DEBUG BİTTİ ------")
