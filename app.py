@@ -23,11 +23,11 @@ def webhook():
             messages=[{"role": "user", "content": user_input}]
         )
         reply = response.choices[0].message.content
-    except Exception as e:
-    import traceback
-    print("❌ OpenAI HATASI:", e)
-    traceback.print_exc()
-    reply = f"Bir hata oldu kanka: {str(e)}"
+        except Exception as e:
+        import traceback
+        print("❌ OpenAI HATASI:", e)
+        traceback.print_exc()
+        reply = f"Bir hata oldu kanka: {str(e)}"
 
     return jsonify({"fulfillmentText": reply})
 
