@@ -1,21 +1,22 @@
 from flask import Flask, request, jsonify
 import openai
 import os
-import os
-print("------ DEBUG BAŞLADI ------")
-print("API KEY:", os.getenv("OPENAI_API_KEY"))
-print("------ DEBUG BİTTİ ------")
+import traceback
+
 app = Flask(__name__)
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 @app.route("/")
 def home():
-    return "KankaGPT aktif!"
+    return "KankaGPT Webhook Aktif!"
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
     req = request.get_json()
+    print("📥 Gelen veri:", req)
+
     user_input = req.get("queryResult", {}).get("queryText", "")
+    print("💬 Kullanıcı mesajı:", user_input)
 
     try:
         response = client.chat.completions.create(
@@ -23,11 +24,10 @@ def webhook():
             messages=[{"role": "user", "content": user_input}]
         )
         reply = response.choices[0].message.content
-        except Exception as e:
-        import traceback
+    except Exception as e:
         print("❌ OpenAI HATASI:", e)
         traceback.print_exc()
-        reply = f"Bir hata oldu kanka: {str(e)}"
+        reply = f"Bende bir hata oldu kanka: {str(e)}"
 
     return jsonify({"fulfillmentText": reply})
 
